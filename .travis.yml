@@ -6,6 +6,26 @@ cache:
   - "$HOME/.m2"
 before_deploy:
 # - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
+- mvn clean package -DskipTests
+deploy:
+  provider: releases
+  api_key: 
+    secure: FBCNMPL5WRsBSuR3DDgpnU9yDDK8AGqP6IFcxcGRz0lbUfYeaM8Q0DB0nsaeoGmApabkYapWUul6E8BiJGn0n6/TeYzrfTy11aPz7mcI8lR535ASjhYCrdBU3JLPNq/tLHCI/H1/rJ6cxOqqmQPgfmD3e9QQ0HUx8Vr/eiV8iU2RLvKHkMJpYfLeFZqzHAMUgzAMNuHWnBYcujEoUb2B2uGwjy/m8tqP2YZm8HDFTJ41CufaUFVMteadXnWREcr5EcNp5EKfrTMe6+mjQ/2n4R4Zn7EaDZDBemjdx+EgA6rqrp7ESfnvtvzfGQBUsidCRzcEDQG2u2Q6tfCBwk1zcw9zacQFybSP4ayD3ohzUkjHX+i7I/dtk168w2RRF6ujVQAs+05PFBdUlR3iwCfUWn87cj5NASf8gsgkjCRht5T+StIK7vhBAc6B4uUEmzTjCBRFs3Rr3na6gaQZr1YCUi6bJU+L96oeHioKIrAdMAkLEgc4PEKYZDP5I3OIRA7Bm7vlVAM6vSX/kONCkOYaV1yY9ubxZ1qmUjPIKk+yGXHfCbGjnydCATg0ShCaRw501ndhj3nBajKNXvhsuPS6fgeTCo6lm89YvZfhhi6jbQa10pEKMxCtIYCyXSQNnCYTgnf1heYbVV9SXJx0tpIOD1CztUyvica5Q0kR94C8GlA=
+  file_glob: true
+  file: 
+      - target/jmeter-bzm-hls-*.jar
+  skip_cleanup: true
+  on:
+    repo: RicardoPoleo/HLSPlugin
+    tags: true
+    
+  provider: script
+  script: bash /execute-on-vnc.sh mvn --batch-mode clean install
+  #script: bash /jmeter-plugins-build/scripts/execute-on-vnc.sh mvn --batch-mode clean install
+
+# Errors:
+
+# - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
 # Error result:
 #[INFO] ------------------------------------------------------------------------
 #[INFO] BUILD FAILURE
@@ -22,17 +42,3 @@ before_deploy:
 #[ERROR] For more information about the errors and possible solutions, please read the following articles:
 #[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
 #The command "mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"" failed and exited with 1 during .
-
-- mvn clean package -DskipTests
-deploy:
-  provider: releases
-  api_key: 
-    secure: FBCNMPL5WRsBSuR3DDgpnU9yDDK8AGqP6IFcxcGRz0lbUfYeaM8Q0DB0nsaeoGmApabkYapWUul6E8BiJGn0n6/TeYzrfTy11aPz7mcI8lR535ASjhYCrdBU3JLPNq/tLHCI/H1/rJ6cxOqqmQPgfmD3e9QQ0HUx8Vr/eiV8iU2RLvKHkMJpYfLeFZqzHAMUgzAMNuHWnBYcujEoUb2B2uGwjy/m8tqP2YZm8HDFTJ41CufaUFVMteadXnWREcr5EcNp5EKfrTMe6+mjQ/2n4R4Zn7EaDZDBemjdx+EgA6rqrp7ESfnvtvzfGQBUsidCRzcEDQG2u2Q6tfCBwk1zcw9zacQFybSP4ayD3ohzUkjHX+i7I/dtk168w2RRF6ujVQAs+05PFBdUlR3iwCfUWn87cj5NASf8gsgkjCRht5T+StIK7vhBAc6B4uUEmzTjCBRFs3Rr3na6gaQZr1YCUi6bJU+L96oeHioKIrAdMAkLEgc4PEKYZDP5I3OIRA7Bm7vlVAM6vSX/kONCkOYaV1yY9ubxZ1qmUjPIKk+yGXHfCbGjnydCATg0ShCaRw501ndhj3nBajKNXvhsuPS6fgeTCo6lm89YvZfhhi6jbQa10pEKMxCtIYCyXSQNnCYTgnf1heYbVV9SXJx0tpIOD1CztUyvica5Q0kR94C8GlA=
-  file_glob: true
-  file: 
-      - target/jmeter-bzm-hls-*.jar
-  skip_cleanup: true
-  on:
-    repo: RicardoPoleo/HLSPlugin
-    tags: true
-script: /execute-on-vnc.sh mvn --batch-mode clean install
