@@ -6,6 +6,7 @@ cache:
   - "$HOME/.m2"
 before_deploy:
 # - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
+- mvn --batch-mode versions:set -DnewVersion="2001"
 - mvn clean package -DskipTests
 deploy:
   provider: releases
@@ -20,7 +21,7 @@ deploy:
     tags: true
     
   provider: script
-  script: bash /execute-on-vnc.sh mvn --batch-mode clean install
+    script: bash /execute-on-vnc.sh mvn --batch-mode clean install
   #script: bash /jmeter-plugins-build/scripts/execute-on-vnc.sh mvn --batch-mode clean install
 
 # Errors:
