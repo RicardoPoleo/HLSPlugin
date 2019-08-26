@@ -5,7 +5,7 @@ cache:
   directories:
   - "$HOME/.m2"
 before_deploy:
-- mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
+#- mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
 - mvn clean package -DskipTests
 
 deploy:
@@ -16,3 +16,6 @@ deploy:
   file: 
       - target/jmeter-bzm-hls-*.jar
   skip_cleanup: true
+  on:
+    repo: RicardoPoleo/HLSPlugin
+    tags: true
