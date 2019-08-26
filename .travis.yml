@@ -21,7 +21,9 @@ deploy:
     tags: true
     
   provider: script
-    script: bash /execute-on-vnc.sh mvn --batch-mode clean install
+  script: bash /execute-on-vnc.sh mvn --batch-mode clean install
+      on:
+      branch: master
   #script: bash /jmeter-plugins-build/scripts/execute-on-vnc.sh mvn --batch-mode clean install
 
 # Errors:
