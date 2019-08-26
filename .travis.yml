@@ -1,3 +1,13 @@
 language: java
 dist: trusty
 jdk: oraclejdk8
+
+deploy:
+  provider: releases
+  file_glob: true
+  file: 
+      - target/jmeter-bzm-hls-*.jar
+      - target/jmeter-test
+      - target/failsafe-reports
+
+  skip_cleanup: true
