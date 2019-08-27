@@ -36,24 +36,3 @@ deploy:
   script: bash /execute-on-vnc.sh mvn --batch-mode clean install
       on:
       branch: master
-  #script: bash /jmeter-plugins-build/scripts/execute-on-vnc.sh mvn --batch-mode clean install
-
-# Errors:
-
-# - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
-# Error result:
-#[INFO] ------------------------------------------------------------------------
-#[INFO] BUILD FAILURE
-#[INFO] ------------------------------------------------------------------------
-#[INFO] Total time: 7.426 s
-#[INFO] Finished at: 2019-08-26T20:52:48Z
-#[INFO] Final Memory: 17M/176M
-#[INFO] ------------------------------------------------------------------------
-#[ERROR] Failed to execute goal org.codehaus.mojo:versions-maven-plugin:2.7:set (default-cli) on project jmeter-hls: You must specify the new version, either by using the newVersion property (that is -DnewVersion=... on the command line) or run in interactive mode -> [Help 1]
-#[ERROR] 
-#[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-#[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-#[ERROR] 
-#[ERROR] For more information about the errors and possible solutions, please read the following articles:
-#[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
-#The command "mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"" failed and exited with 1 during .
