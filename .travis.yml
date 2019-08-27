@@ -2,6 +2,10 @@
 branches: 
   only: 
     - master
+cache: 
+  directories: 
+    - $HOME/.m2/repository/
+    - $HOME/.jmeter/
 dist: trusty
 jdk: oraclejdk8
 jobs: 
