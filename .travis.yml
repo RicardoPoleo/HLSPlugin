@@ -6,16 +6,19 @@ branches:
     only:
     - master
     
-before_deploy:
-  - export RELEASE_JAR_FILE=$(ls target/jmeter-bzm-hls-*.jar)
-  - echo "IMPORTANT Deploying $RELEASE_JAR_FILE to GitHub"
-
 jobs:
   include:
-    - script: echo "Running unit tests (1)"
-    - script: echo "Running unit tests (2)"
+    - stage: Running Tests
+      script: echo "Running unit tests (1)"
+    - stage: Compatibility Tests
+      script: echo "Running unit tests (2)"
     - stage: GitHub Release
       script: echo "Deploying to GitHub releases ..."
+      before_deploy:
+        #- export RELEASE_JAR_FILE=$(ls target/jmeter-bzm-hls-*.jar)
+        #- echo "IMPORTANT Deploying $RELEASE_JAR_FILE to GitHub"
+        - echo "IMPORTANT Deploying on to GitHub"
+        
       deploy:
         provider: releases
         api_key: FBCNMPL5WRsBSuR3DDgpnU9yDDK8AGqP6IFcxcGRz0lbUfYeaM8Q0DB0nsaeoGmApabkYapWUul6E8BiJGn0n6/TeYzrfTy11aPz7mcI8lR535ASjhYCrdBU3JLPNq/tLHCI/H1/rJ6cxOqqmQPgfmD3e9QQ0HUx8Vr/eiV8iU2RLvKHkMJpYfLeFZqzHAMUgzAMNuHWnBYcujEoUb2B2uGwjy/m8tqP2YZm8HDFTJ41CufaUFVMteadXnWREcr5EcNp5EKfrTMe6+mjQ/2n4R4Zn7EaDZDBemjdx+EgA6rqrp7ESfnvtvzfGQBUsidCRzcEDQG2u2Q6tfCBwk1zcw9zacQFybSP4ayD3ohzUkjHX+i7I/dtk168w2RRF6ujVQAs+05PFBdUlR3iwCfUWn87cj5NASf8gsgkjCRht5T+StIK7vhBAc6B4uUEmzTjCBRFs3Rr3na6gaQZr1YCUi6bJU+L96oeHioKIrAdMAkLEgc4PEKYZDP5I3OIRA7Bm7vlVAM6vSX/kONCkOYaV1yY9ubxZ1qmUjPIKk+yGXHfCbGjnydCATg0ShCaRw501ndhj3nBajKNXvhsuPS6fgeTCo6lm89YvZfhhi6jbQa10pEKMxCtIYCyXSQNnCYTgnf1heYbVV9SXJx0tpIOD1CztUyvica5Q0kR94C8GlA=
