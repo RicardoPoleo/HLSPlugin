@@ -1,9 +1,4 @@
 --- 
-branches: 
-  only: 
-    - master
-dist: trusty
-jdk: oraclejdk8
 jobs: 
   include: 
     - 
@@ -19,4 +14,30 @@ jobs:
         - "echo \"We are going to run execute-on-vnc.sh and Sonar\""
         - "echo \"End Sonnar Excecution\""
       stage: "Build and Analyze"
-language: java
+    - 
+      install: true
+      script: 
+        - "echo \"Skipping tests\""
+        - "mvn clean package -DskipTests"
+        - "echo \"Instalation done\""
+        - "echo \"Moving to Target\""
+        - "cd target/jmeter-test"
+        - "echo \"Excecuting tests\""
+        - "JMETER_VERSION=5.0 sh testJmeter.sh"
+        - "JMETER_VERSION=3.3 sh testJmeter.sh"
+        - "JMETER_VERSION=4.0 sh testJmeter.sh"
+        - "JMETER_VERSION=5.1 sh testJmeter.sh"
+        - "JMETER_VERSION=5.1.1 sh testJmeter.sh"
+        - "JMETER_VERSION=5.0 JVM_VERSION=11 sh testJmeter.sh"
+      stage: "JMeter Compatibility"
+    - 
+      before_deploy: ~
+      deploy: 
+        api_key: $GH_TOKEN
+        provider: releases
+        skip_cleanup: true
+        true: 
+          branch: master
+      install: true
+      script: "echo \"Deploying to GitHub releases.\""
+      stage: "GitHub Release"
