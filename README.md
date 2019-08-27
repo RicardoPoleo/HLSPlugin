@@ -4,6 +4,10 @@ The HLS protocol provides a reliable, cost-effective means of delivering continu
 
 #### In a HTTP Live Streaming process:
 
+
+
+
+
 - The audio/video to be streamed is reproduced by a media encoder at different quality levels, bitrates and resolutions. Each version is called a variant.
 - The different variants are split up into smaller Media Segment Files.
 - The encoder creates a Media Playlist for each variant with the URLs of each Media Segment.
