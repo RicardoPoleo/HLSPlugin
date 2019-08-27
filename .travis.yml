@@ -8,6 +8,10 @@ cache:
 
 build:
   script: bash test.sh
+  
+before_deploy:
+  - mvn clean package -DskipTests
+  
 #Install
 #before_deploy:
 # - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
