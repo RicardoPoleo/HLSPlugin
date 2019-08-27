@@ -5,6 +5,10 @@ jdk: oraclejdk8
 branches:
     only:
     - master
+    
+before_deploy:
+  - export RELEASE_JAR_FILE=$(ls target/jmeter-bzm-hls-*.jar)
+  - echo "IMPORTANT Deploying $RELEASE_JAR_FILE to GitHub"
 
 deploy:
   provider: releases
