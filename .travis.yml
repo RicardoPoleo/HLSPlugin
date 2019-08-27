@@ -17,7 +17,6 @@ jobs:
         - "echo \"Running battery of tests\""
       stage: "Build and Running Tests"
     - 
-      if: "RUN_FIRST_JOB = 1"
       install: true
       script: 
         - "echo \"Skipping tests\""
@@ -34,13 +33,15 @@ jobs:
         - "JMETER_VERSION=5.0 JVM_VERSION=11 sh testJmeter.sh"
       stage: "JMeter Compatibility"
     - 
-      before_deploy: 
+      before_deploy: ~
       deploy: 
         api_key: $GH_TOKEN
         provider: releases
         skip_cleanup: true
         true: 
           branch: master
+      file: 
+        - target/jmeter-bzm-hls-*.jar
       install: true
       script: "echo \"Deploying to GitHub releases.\""
       stage: "GitHub Release"
