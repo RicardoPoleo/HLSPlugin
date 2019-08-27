@@ -1,4 +1,9 @@
 --- 
+branches: 
+  only: 
+    - master
+dist: trusty
+jdk: oraclejdk8
 jobs: 
   include: 
     - 
@@ -41,3 +46,4 @@ jobs:
       install: true
       script: "echo \"Deploying to GitHub releases.\""
       stage: "GitHub Release"
+language: java
