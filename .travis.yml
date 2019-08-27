@@ -7,14 +7,17 @@ cache:
     - $HOME/.m2/repository/
     - $HOME/.jmeter/
 dist: trusty
+env: "RUN_FIRST_JOB=1; RUN_SECOND_JOB=1"
 jdk: oraclejdk8
 jobs: 
   include: 
     - 
+      if: "RUN_FIRST_JOB = 1"
       script: 
         - "echo \"Running battery of tests\""
       stage: "Build and Running Tests"
     - 
+      if: "RUN_SECOND_JOB = 1"
       install: true
       script: 
         - "echo \"Skipping tests\""
