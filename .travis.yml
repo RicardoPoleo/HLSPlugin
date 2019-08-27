@@ -1,13 +1,25 @@
+#TODO: Remember to delete all comments
+
+#Seting up enviroment
 language: java
 dist: trusty
 jdk: oraclejdk8
 cache:
   directories:
-  - "$HOME/.m2"
+  - "$HOME/.m2/repository/"
+  - "$HOME/.jmeter/"
+
+
+#Install
+
+
 before_deploy:
 # - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
+#TODO: Review why the previous sentence break
+  - echo "Some random text to test ECHO"
   - mvn --batch-mode versions:set -DnewVersion="2001" 
   - mvn clean package -DskipTests
+  
 deploy:
   provider: releases
   api_key: 
