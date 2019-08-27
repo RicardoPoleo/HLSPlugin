@@ -9,11 +9,16 @@ branches:
 jobs:
   include:
     - stage: Running Tests
-      script: echo "Running unit tests (1)"
+      script: echo "Running battery of tests"
     - stage: Compatibility Tests
-      script: echo "Running unit tests (2)"
+      install: true
+      script: 
+        - echo "Skipping tests"
+        - mvn clean package -DskipTests
+        - echo "Instalation done"
     - stage: GitHub Release
-      script: echo "Deploying to GitHub releases ..."
+      install: true
+      script: echo "Deploying to GitHub releases."
       before_deploy:
         #- export RELEASE_JAR_FILE=$(ls target/jmeter-bzm-hls-*.jar)
         #- echo "IMPORTANT Deploying $RELEASE_JAR_FILE to GitHub"
