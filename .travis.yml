@@ -19,12 +19,10 @@ jobs:
     - 
       install: true
       script: 
-        - "echo \"Skipping tests\""
         - "mvn clean package -DskipTests"
-        - "echo \"Instalation done\""
-        - "echo \"Moving to Target\""
+        - ls
         - "cd target/jmeter-test"
-        - "echo \"Excecuting tests\""
+        - "echo \"JMeter Compatibility\""
         - "JMETER_VERSION=5.0 sh testJmeter.sh"
         - "JMETER_VERSION=3.3 sh testJmeter.sh"
         - "JMETER_VERSION=4.0 sh testJmeter.sh"
@@ -33,7 +31,9 @@ jobs:
         - "JMETER_VERSION=5.0 JVM_VERSION=11 sh testJmeter.sh"
       stage: "JMeter Compatibility"
     - 
-      before_deploy: ~
+      before_deploy: 
+        - "export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}"
+        - "git tag $TRAVIS_TAG"
       deploy: 
         api_key: $GH_TOKEN
         provider: releases
