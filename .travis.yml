@@ -18,7 +18,7 @@ jobs:
         - mvn clean package -DskipTests
         - echo "Instalation done"
         - echo "We are going to run execute-on-vnc.sh and Sonar"
-        - /execute-on-vnc.sh mvn --batch-mode -Psonar clean install sonar:sonar -Dsonar.host.url=https://sonar.abstracta.us -Dsonar.login=$SONAR_TOKEN
+        #- /execute-on-vnc.sh mvn --batch-mode -Psonar clean install sonar:sonar -Dsonar.host.url=https://sonar.abstracta.us -Dsonar.login=$SONAR_TOKEN
         - echo "End Sonnar Excecution"
     - stage: JMeter Compatibility
       install: true
