@@ -19,7 +19,7 @@ jobs:
     - 
       install: true
       script: 
-        - "mvn clean package -DskipTests"
+        - "mvn clean install -DskipTests"
         - ls
         - "cd target/"
         - ls
