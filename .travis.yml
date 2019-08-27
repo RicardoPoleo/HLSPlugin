@@ -17,16 +17,7 @@ jobs:
         - "echo \"Running battery of tests\""
       stage: "Build and Running Tests"
     - 
-      if: "RUN_SECOND_JOB = 1"
-      install: true
-      script: 
-        - "echo \"Skipping tests\""
-        - "mvn clean package -DskipTests"
-        - "echo \"Instalation done\""
-        - "echo \"We are going to run execute-on-vnc.sh and Sonar\""
-        - "echo \"End Sonnar Excecution\""
-      stage: "Build and Analyze"
-    - 
+      if: "RUN_FIRST_JOB = 1"
       install: true
       script: 
         - "echo \"Skipping tests\""
@@ -43,7 +34,7 @@ jobs:
         - "JMETER_VERSION=5.0 JVM_VERSION=11 sh testJmeter.sh"
       stage: "JMeter Compatibility"
     - 
-      before_deploy: ~
+      before_deploy: 
       deploy: 
         api_key: $GH_TOKEN
         provider: releases
