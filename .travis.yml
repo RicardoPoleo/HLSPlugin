@@ -21,6 +21,8 @@ jobs:
       script: 
         - "mvn clean package -DskipTests"
         - ls
+        - "cd target/"
+        - ls
         - "cd target/jmeter-test"
         - "echo \"JMeter Compatibility\""
         - "JMETER_VERSION=5.0 sh testJmeter.sh"
