@@ -7,7 +7,7 @@ cache:
   - "$HOME/.jmeter/"
 
 build:
-  script: bash test.sh
+  script: echo "HELLOOOO!"
   
 before_deploy:
   - mvn clean package -DskipTests
