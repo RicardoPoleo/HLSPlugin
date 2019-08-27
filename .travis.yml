@@ -21,6 +21,11 @@ deploy:
   on:
     repo: RicardoPoleo/HLSPlugin
     tags: true
+    
+  provider: script
+  script: bash /execute-on-vnc.sh mvn --batch-mode clean install
+      on:
+      branch: master
 
 #cache:
 #  directories:
