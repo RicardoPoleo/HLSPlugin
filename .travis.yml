@@ -9,9 +9,9 @@ cache:
 #Install
 before_deploy:
 # - mvn --batch-mode versions:set -DnewVersion="$(T=${TRAVIS_TAG%%-lib}; echo ${T:1})"
-
+  - echo "Some random text to test ECHO"
   - mvn --batch-mode versions:set -DnewVersion="2001" 
-  - mvn clean package -DskipTests
+  - mvn clean package
   
 deploy:
   provider: releases
