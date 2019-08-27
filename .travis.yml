@@ -8,28 +8,48 @@ branches:
     
 jobs:
   include:
-    - stage: Running Tests
-      script: echo "Running battery of tests"
-    - stage: Compatibility Tests
+    - stage: Build and Running Tests
+      script: 
+        - echo "Running battery of tests"
+    - stage: Build and Analyze
       install: true
       script: 
         - echo "Skipping tests"
         - mvn clean package -DskipTests
         - echo "Instalation done"
+        - echo "We are going to run execute-on-vnc.sh and Sonar"
+        - /execute-on-vnc.sh mvn --batch-mode -Psonar clean install sonar:sonar -Dsonar.host.url=https://sonar.abstracta.us -Dsonar.login=$SONAR_TOKEN
+        - echo "End Sonnar Excecution"
+    - stage: JMeter Compatibility
+      install: true
+      script:
+         - echo "Skipping tests"
+        - mvn clean package -DskipTests
+        - echo "Instalation done"      
+        - echo "Moving to Target" 
+        - cd target/jmeter-test
+        - echo "Excecuting tests"
+        - JMETER_VERSION=5.0 sh testJmeter.sh
+        - JMETER_VERSION=3.3 sh testJmeter.sh
+        - JMETER_VERSION=4.0 sh testJmeter.sh
+        - JMETER_VERSION=5.1 sh testJmeter.sh
+        - JMETER_VERSION=5.1.1 sh testJmeter.sh
+        - JMETER_VERSION=5.0 JVM_VERSION=11 sh testJmeter.sh
+        #- bzt testJMeterBZ.yaml -o modules.cloud.token=${BZ_TOKEN}      
     - stage: GitHub Release
       install: true
       script: echo "Deploying to GitHub releases."
       before_deploy:
         #- export RELEASE_JAR_FILE=$(ls target/jmeter-bzm-hls-*.jar)
         #- echo "IMPORTANT Deploying $RELEASE_JAR_FILE to GitHub"
-        - echo "IMPORTANT Deploying on to GitHub"
-        
+
       deploy:
         provider: releases
         api_key: FBCNMPL5WRsBSuR3DDgpnU9yDDK8AGqP6IFcxcGRz0lbUfYeaM8Q0DB0nsaeoGmApabkYapWUul6E8BiJGn0n6/TeYzrfTy11aPz7mcI8lR535ASjhYCrdBU3JLPNq/tLHCI/H1/rJ6cxOqqmQPgfmD3e9QQ0HUx8Vr/eiV8iU2RLvKHkMJpYfLeFZqzHAMUgzAMNuHWnBYcujEoUb2B2uGwjy/m8tqP2YZm8HDFTJ41CufaUFVMteadXnWREcr5EcNp5EKfrTMe6+mjQ/2n4R4Zn7EaDZDBemjdx+EgA6rqrp7ESfnvtvzfGQBUsidCRzcEDQG2u2Q6tfCBwk1zcw9zacQFybSP4ayD3ohzUkjHX+i7I/dtk168w2RRF6ujVQAs+05PFBdUlR3iwCfUWn87cj5NASf8gsgkjCRht5T+StIK7vhBAc6B4uUEmzTjCBRFs3Rr3na6gaQZr1YCUi6bJU+L96oeHioKIrAdMAkLEgc4PEKYZDP5I3OIRA7Bm7vlVAM6vSX/kONCkOYaV1yY9ubxZ1qmUjPIKk+yGXHfCbGjnydCATg0ShCaRw501ndhj3nBajKNXvhsuPS6fgeTCo6lm89YvZfhhi6jbQa10pEKMxCtIYCyXSQNnCYTgnf1heYbVV9SXJx0tpIOD1CztUyvica5Q0kR94C8GlA=
         skip_cleanup: true
         on:
           tags: true
+          branch: master
 
 #deploy:
 #  provider: releases
